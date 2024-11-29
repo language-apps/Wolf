@@ -1,0 +1,131 @@
+body    { 	font-family: Ariel, Helvetica, Sans-serif; 
+            color:black; 
+			background-color:#e0e0e0;
+			background-image: url("acorns-3535510_1920.jpg");
+			background-size:cover;
+			width:98%;height:96%;
+		}
+			
+			
+body.frame { font-family: Ariel, Helvetica, Sans-serif;
+             color:black; 
+			 background-color:#f0f0f0;
+		   }
+             
+a         { font-family: Ariel, Helvetica, Sans-serif; }
+a:visited { font-family: Ariel, Helvetica, Sans-serif;  color:#ccc; background-color:transparent; }
+a:link    { font-family: Ariel, Helvetica, Sans-serif; color:#fff; background-color:transparent; }
+a:active  { font-family: Ariel, Helvetica, Sans-serif; color:red; background-color:transparent; }
+a:hover   { font-family: Ariel, Helvetica, Sans-serif; color:red; background-color:transparent; }
+.small    { font-family: "Courier New", Courier, mono, Monospace; font-size: 8pt; }
+
+h1, h2, h3, table {
+			color:white;
+		}
+		
+table {
+			background-color: #321e20;
+		}
+
+section {
+			background-color: #321e20; 
+			color:white; 
+			margin-left:5%;
+			margin-right:5%;
+			border-style: ridge;
+			border-width: 2px;
+			padding:2px;
+	    }
+		
+footer 	{
+			text-align:center;
+			color:white;
+			border-style: ridge;
+			border-width: 2px;
+		}
+		
+.noborder {
+			border-style:none;
+		}
+
+footer	{
+			float:left;
+			margin-left:25%;
+			margin-right:25%;
+			margin-top:10px;
+			width:50%;
+			text-align:center;
+		}
+
+.wolf, .hare, .elk, .narrow, .last {
+			width:27%;
+			margin-left:2.5%;
+			margin-right:2.5%;
+			float:left;
+			margin-top:30px;
+		}	
+		
+		
+.notes	{
+			float:left;
+			margin-top:20px;
+		}
+		
+img.scale {
+			width:45%;
+			margin:2%;
+			float:left;
+			height:auto;
+			margin-top:20px;
+		}
+		
+img.normal {
+			width:95%;
+			height:auto;
+			margin:10px;
+			float:none;
+		}
+		
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (max-width : 480px) {
+	.wolf, .hare, .elk,.last, .narrow {
+			width:90%;
+			max-width:90%;
+			margin-left:2%;
+			margin-right:2%;
+			margin-top:20px;
+		}
+		
+	img.scale {
+			width:90%;
+			margin:2%;
+			float:none;
+			height:auto;
+		}
+}
+
+
+@media only screen and (min-width: 481px) and (max-width: 640px) {
+	.wolf, .hare, .narrow {
+			float:left;
+			width: 44%;
+			margin-left:2%;
+			margin-right:2%;
+			margin-top:50px;
+		}
+		
+	.elk, .last {
+			clear: both;
+			width:44%;
+			margin-left:27%;
+			margin-right:27%; 
+	}	
+
+}
+
+@media only screen and (min-width: 1600px) {
+	section {
+	    font-size:large;
+	}
+}

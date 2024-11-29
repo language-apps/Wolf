@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/ss_css2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/pd4ml.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/jhall.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/javafx.swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/javafx.media.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/javafx.graphics.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/javafx.controls.jar"/>
+	<classpathentry kind="lib" path="C:/Users/danjh/OneDrive/Documents/development/2024/Libraries/lib/javafx.base.jar"/>
+	<classpathentry kind="lib" path="lib/AudioVisualFonts.jar" sourcepath="lib/AudioVisualFontsSrc.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

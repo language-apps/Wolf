@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='ISO-8859-1' ?>
+<!DOCTYPE map
+  PUBLIC "-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+         "http://java.sun.com/products/javahelp/map_1_0.dtd">
+
+<map version="1.0">
+
+  <mapID target="features"              url="helpFiles/features.html" /> 
+  <mapID target="generaloperation"      url="helpFiles/generaloperation.html" /> 
+  <mapID target="gettingstarted"        url="helpFiles/gettingstarted.html" /> 
+  <mapID target="enteringwords"         url="helpFiles/enteringwords.html" />
+  <mapID target="phonetics"             url="helpFiles/phonetics.html" />
+  <mapID target="searchandsort"         url="helpFiles/searchandsort.html" />
+  <mapID target="templates"				url="helpFiles/templates.html" />
+  <mapID target="draganddrop"           url="helpFiles/draganddropfacilities.html" />
+  <mapID target="multimedia"            url="helpFiles/multimedia.html" />
+  <mapID target="importxml"				url="helpFiles/importfromxml.html" />
+</map>
