@@ -1,4 +1,4 @@
-### [W]ord [O]riented [L]inguistic [F]ramework
+# WOLF ([W]ord [O]riented [L]inguistic [F]ramework)
 
 WOLF provides a framework for creating indigenous dictionaries. The software supports dictionaries with multiple languages and dialects, searching and sorting, import and export facilities, generation of web-pages and pdf documents, integration with the ACORNS mobile gallery applications, multimedia attachments, and IPA phonetics.
 
