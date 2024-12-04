@@ -84,7 +84,6 @@ public class Wolf extends JFrame implements WindowListener
 	      }
 	  }
 	  
-      fileAssociations();
       Image imageIcon = Icons.getImageIcon("wolf.png", 30).getImage();
       setIconImage(imageIcon);
 
@@ -133,31 +132,6 @@ public class Wolf extends JFrame implements WindowListener
    			"Main: " + t.toString()); 
 	   }
    }
-
-   /** Check file associations */
-   private void fileAssociations() throws Throwable
-   {   
-	   String os = System.getProperty("os.name");
-       if (os.toLowerCase().indexOf("windows")>=0)
-       {   String separator = System.getProperty("file.separator");
-           String path = System.getProperty("user.dir");
-           String file = path + separator + "wolf.exe";
-           File   exe  = new File(file);
-           if (exe.exists())
-           {   try
-               {  
-        	      String command = "cmd /c assoc .adct=wolf";
-                  Process p = Runtime.getRuntime().exec(command);
-                  p.waitFor();
-
-                  command = "cmd /c ftype wolf=\"" + file + "\" \"%1\"";
-                  p = Runtime.getRuntime().exec(command);
-                  p.waitFor();
-
-               }  catch (Exception e) {}
-           }   // End of if executable exists
-       }       // End of if window operating system
-   }           // End of file associations
 
    /** Listen for the closing of the frame window.	*/
    @Override public void windowClosing(WindowEvent event)

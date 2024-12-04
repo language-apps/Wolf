@@ -27,6 +27,7 @@ package org.wolf.system;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.NoSuchElementException;
@@ -60,7 +61,7 @@ public class JarLoader
       
       try
       {  
-    	 URL url = new URL(urlBase + "jars");
+    	 URL url = new URI(urlBase + "jars").toURL();
          URLConnection connection = url.openConnection();
          InputStream stream = connection.getInputStream();
          BufferedReader in = new BufferedReader(new InputStreamReader(stream));
@@ -85,7 +86,7 @@ public class JarLoader
                 }
                 else if (types==null) addJar = false;
                 if (addJar)
-                {  jarURL = new URL(urlBase + fileName[0]);
+                {  jarURL = new URI(urlBase + fileName[0]).toURL();
                    urls.add(jarURL);
                 }
             }

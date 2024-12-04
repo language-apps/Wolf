@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.io.StringReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -587,17 +588,22 @@ public class FormatData implements Serializable
 				pd4ml.useTTF( fonts, true );
 		  }
 	      
-	      pd4ml.render(reader, stream, new URL("file:" + directoryPath), "UTF-8");
-
-	      if (type.equals(PD4Constants.RTF_WMF)) {
-	         String rtf = new String(stream.toByteArray(), "UTF-8");
-
-	         rtf = rtf.replaceAll("\\\\par", "\\\\pard\\\\par");
-	         rtf = rtf.replaceAll("#SUB#", "{\\\\sub ");
-		     rtf = rtf.replaceAll("#XSUB#", "}");
-	         rtf = embedFonts(fonts, rtf);
-	         return rtf.getBytes();
-	      }
+		  try
+		  {
+		      pd4ml.render(reader, stream, new URI("file:" + directoryPath).toURL(), "UTF-8");
+	
+		      if (type.equals(PD4Constants.RTF_WMF)) 
+		      {
+		         String rtf = new String(stream.toByteArray(), "UTF-8");
+	
+		         rtf = rtf.replaceAll("\\\\par", "\\\\pard\\\\par");
+		         rtf = rtf.replaceAll("#SUB#", "{\\\\sub ");
+			     rtf = rtf.replaceAll("#XSUB#", "}");
+		         rtf = embedFonts(fonts, rtf);
+		         return rtf.getBytes();
+		      }
+		  }
+		  catch (Exception e) {}
 	      
 	      return stream.toByteArray();
 	  }
@@ -1263,7 +1269,7 @@ public class FormatData implements Serializable
 				File temp = File.createTempFile(name, extension);
 				temp.deleteOnExit();
 				
-				manager.resizePicture(new URL(path), temp.getAbsolutePath(), -1,96);
+				manager.resizePicture(new URI(path).toURL(), temp.getAbsolutePath(), -1,96);
 				path = temp.toURI().toURL().toString();
 			}
 			catch (Exception e)  {}
