@@ -47,9 +47,7 @@ import org.wolf.system.Environment;
 public class Wolf extends JFrame implements WindowListener
 {  
 	private static final long serialVersionUID = 1L;
-
 	private static final Dimension APP_SIZE = new Dimension(1200, 800);
-   
     private static DictionaryPanels rootPanel;
     public Environment environment;
 
