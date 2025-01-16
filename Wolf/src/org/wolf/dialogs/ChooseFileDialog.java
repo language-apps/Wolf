@@ -47,7 +47,6 @@ import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.wolf.application.RootDictionaryPanel;
 import org.acorns.audio.SoundDefaults;
@@ -62,9 +61,9 @@ import org.wolf.system.Environment;
 	 private static String fileName;
 	 
      /** Loading a dictionary file */
-     public final static int LOAD = 0;
+     public final static int LOAD   = 0;
      /** Saving a dictionary file */
-     public final static int SAVE = 1;
+     public final static int SAVE   = 1;
      /** Importing a dictionary file */
      public final static int IMPORT = 2;
      /** Exporting a dictionary file */
@@ -72,7 +71,9 @@ import org.wolf.system.Environment;
      /** Create a mobile application */
      public final static int MOBILE = 4;
      /** Create a web page */
-     public final static int WEB = 5;
+     public final static int WEB    = 5;
+     /** Print to RTF */
+     public final static int RTF   = 6;
 
      private final static String[] titles
              = {  "load"
@@ -81,32 +82,27 @@ import org.wolf.system.Environment;
     	        , "export" 
     	        , "mobile app"
     	        , "web page"
+    	        , "output in rich text format"
     	       };
      private final static String[] filters
              = {  "dictionary files (adct)"
     	        , "dictionary files (adct)"
                 , "import files (xml, db)"
-                , "export files (xml)" 
+                , "export files (xml, rtf)" 
                 , "mobile application files (acorns)"
                 , "web page files (html)"
+                , "rich text format files (rtf)"
                };
      private final static String[][] extensions
              = { {"adct"},
     	         {"adct"},
     	         {"xml", "db", "lift", "txt", "csv"},
-    	         {"xml"},
+    	         {"xml", "rtf"},
     	         {"acorns"},
-    	         {"html"}
+    	         {"html"},
+    	         {"rtf" }
     	       };
      
-     private final static String[] additionalFilters
-            = { "web page files (htm)", 
-    	 		"rich text format (rtf)", 
-    	 		"portable document format (pdf)", };
-     
-     private final static String[] additionalExtensions
-            = { "htm", "rtf", "pdf" };
-
      private JFileChooser fc;
 
      private File file;
@@ -130,21 +126,8 @@ import org.wolf.system.Environment;
         
         String title = "Please select a file to " + titles[option];
 
-        int size = extensions[option].length;
-        if (option==EXPORT)
-        	size += additionalExtensions.length;
-        String[] totalExtensions = new String[size];
-        System.arraycopy(extensions[option], 0
-        		, totalExtensions, 0, extensions[option].length);
-        
-        if (option == EXPORT)
-        {
-        	System.arraycopy(additionalExtensions, 0
-        		, totalExtensions, extensions[option].length, additionalExtensions.length);       
-        }
-        
         DialogFilter dialogFilter      
-           = new DialogFilter(filters[option], totalExtensions);
+           = new DialogFilter(filters[option], extensions[option]);
 
         String osName = System.getProperty("os.name");
         if (!osName.contains("Mac")) 
@@ -157,16 +140,6 @@ import org.wolf.system.Environment;
 	
 	        fc.setDialogTitle(title);
 	        fc.setFileFilter( dialogFilter );
-	        
-	        FileNameExtensionFilter filter;
-	        if (option == EXPORT)
-	        {
-	        	for (int i=0; i<additionalFilters.length; i++)
-	        	{
-	               filter = new FileNameExtensionFilter(additionalFilters[i], additionalExtensions[i]);
-	           	   fc.addChoosableFileFilter(filter);
-	        	}
-	        }
 	        
 	        JPanel panel = createAccessoryComponent(extension);
 	        if (panel!=null) fc.setAccessory(panel);
@@ -182,7 +155,7 @@ import org.wolf.system.Environment;
 	
 	        if (returnVal == JFileChooser.APPROVE_OPTION)
 	        {  // Add the dictionary extension if needed.
-	           file     = fc.getSelectedFile();
+	           file     = fc.getSelectedFile(); 
 	        }
         }
         else
@@ -208,7 +181,7 @@ import org.wolf.system.Environment;
             String directory = fd.getDirectory();
             String fullPath = directory + fileName;
             
-            if (option!=LOAD && option!=SAVE && option!=MOBILE)
+            if (option!=LOAD && option!=IMPORT)
             {	
                 if (!SoundDefaults.isValidForSandbox(fullPath))
 	            {
@@ -224,7 +197,7 @@ import org.wolf.system.Environment;
             }
         }
         
-        if (file==null)
+        if (file==null) 
         {
         	throw new FileNotFoundException("Chooser operation canceled");        	
         }
@@ -244,7 +217,7 @@ import org.wolf.system.Environment;
 		    }
 		    else
 		    {
-		    	for (String ext: additionalExtensions)
+		    	for (String ext: extensions[option])
 		    	{
 		    		if (fullName.endsWith(ext))
 		    		{
@@ -390,6 +363,12 @@ import org.wolf.system.Environment;
            }
         }
         return( path.delete() );
+    }
+   
+    /** Get default file name */
+    public static String getFileName()
+    {
+    	return fileName;
     }
     
     /** Clear default file name when dictionary is closed */

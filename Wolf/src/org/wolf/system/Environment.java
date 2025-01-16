@@ -90,6 +90,8 @@ public class Environment implements Constants
     private OntologyData ontology = null;
     private FormatData templates;
     private MultimediaManager mediaManager;
+    
+    private static RTFPrintService rtfPrintService;
 
     public Environment(JFrame frame)
     {   root = frame;
@@ -159,6 +161,12 @@ public class Environment implements Constants
        }
        catch (Throwable t) {}
        return null;
+    }
+ 
+    /** Get the service for printing RTF files to disk. */
+    public static RTFPrintService getRTFPrintService()
+    {
+    	return rtfPrintService;
     }
 
     /** Method to read persistent application parameters from disk */
@@ -260,8 +268,13 @@ public class Environment implements Constants
           templates = (FormatData)ois.readObject();
           ois.close();
       }
-      catch (Exception e)   { }
+      catch (Exception e)   
+      { 
+    	  System.out.println(e);
+      }
       
+  	 rtfPrintService = new RTFPrintService(this);
+
     }
 
     /** Method to shutdown wolf and write the persistent parameters to disk */

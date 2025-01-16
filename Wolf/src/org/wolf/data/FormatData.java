@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.io.StringReader;
 import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -27,6 +26,7 @@ import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -429,22 +429,6 @@ public class FormatData implements Serializable
        	return new String(rtfBytes);
 	}
 	
-	/** Format the dictionary in PDF accordance to the selected template
-	 * 
-	 * @param document The DOM object containing dictionary information
-	 * @param gloss The gloss language code
-	 * @param active The active languages for cross reference
-	 * @return The HTML document to display the dictionary or null if no template selected
-	 */
-	public byte[] toPDF(Document document, String gloss, String[] active)
-						throws IOException
-	{
-		String htmlStr = toHTML(document, gloss, active);
-       	byte[] rtfBytes = makeRTForPDF(htmlStr, PD4Constants.PDF );
-       	return rtfBytes;
-	}
-	
-	
 	/** Format the dictionary in HTML accordance to the selected template
 	 * 
 	 * @param document The DOM object containing dictionary information
@@ -548,9 +532,14 @@ public class FormatData implements Serializable
 	    *  @param type PD4Constants.RTF_WMF or PD4Constants.PDF
 	    *  @return byte array containing the RTF or PDF data
 	    */   
-	   private byte[] makeRTForPDF(String htmlString, String type)
+	   public byte[] makeRTForPDF(String htmlString, String type)
 	   				throws FileNotFoundException, IOException, MalformedURLException
 	   {
+	      PropertyChangeListener[] pcl 
+	        = Toolkit.getDefaultToolkit().getPropertyChangeListeners
+	                                         ("DictionaryListeners");
+	      RootDictionaryPanel root  = (RootDictionaryPanel)pcl[0];
+	      JLabel errorLabel = root.getErrorLabel();
 
  	      PD4ML pd4ml = new PD4ML();
 	      pd4ml.outputFormat(type);
@@ -587,10 +576,12 @@ public class FormatData implements Serializable
 		  if ( fonts != null && fonts.length() > 0 ) {
 				pd4ml.useTTF( fonts, true );
 		  }
-	      
+		  
 		  try
-		  {
-		      pd4ml.render(reader, stream, new URI("file:" + directoryPath).toURL(), "UTF-8");
+		  { 
+			  String rtfLabel = (type.length()>=3) ? type.substring(0,3) : type;  
+			  errorLabel.setText("Converting to " + rtfLabel + " for output");
+			  pd4ml.render(reader, stream);
 	
 		      if (type.equals(PD4Constants.RTF_WMF)) 
 		      {
@@ -603,7 +594,10 @@ public class FormatData implements Serializable
 		         return rtf.getBytes();
 		      }
 		  }
-		  catch (Exception e) {}
+		  catch (Exception e) 
+		  {
+			  errorLabel.setText(e.getMessage());
+		  }
 	      
 	      return stream.toByteArray();
 	  }
@@ -697,7 +691,14 @@ public class FormatData implements Serializable
 		Element[] elementLists = getElementLists(word);
 		
 		// style the word header
-		if (template[t.W_HDR.ordinal()][0][W_SHOW].equalsIgnoreCase("true"))
+		String showWord = "true";
+		try
+		{
+		   showWord = template[t.W_HDR.ordinal()][0][W_SHOW];	
+		}
+		catch (Exception e) {};
+		
+		if (showWord.equalsIgnoreCase("true"))
 		{
 			Element translations = elementLists[TRANSLATIONS];
 			Node node = translations.getFirstChild();
@@ -801,7 +802,12 @@ public class FormatData implements Serializable
 		String order   = template[t.D_HDR.ordinal()][0][C_COUNT];
 		String rows    = template[t.D_HDR.ordinal()][0][C_ROWS];
 		String title   = template[t.D_HDR.ordinal()][0][C_TITLE];
-		String display = template[t.D_HDR.ordinal()][0][C_DISPLAY];
+		String display = "default";
+		try // Previous version templates did not have an entry for C_DISPLAY
+		{
+			display = template[t.D_HDR.ordinal()][0][C_DISPLAY];
+		}
+		catch (Exception e) {}
 		
 		title = title.replaceAll("\\\\n", "<br>\n");
 		title = title.replaceAll("\\\\t", "&nbsp;&nbsp;&nbsp;&nbsp;");

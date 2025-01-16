@@ -26,7 +26,10 @@ import javax.swing.WindowConstants;
 import javax.swing.text.html.HTMLEditorKit;
 import javax.swing.text.html.StyleSheet;
 
+import org.wolf.application.RootDictionaryPanel;
 import org.wolf.data.DictionaryData;
+import org.wolf.system.Environment;
+import org.wolf.system.RTFPrintService;
 
 public class PrintDialog extends JDialog
 {
@@ -36,10 +39,12 @@ public class PrintDialog extends JDialog
 	JEditorPane printPanel;
 	JLabel label;
     DictionaryData dictionary;
+    RTFPrintService rtfService;
     
     public PrintDialog()
     {
-    	
+        RTFPrintService rtfService = Environment.getRTFPrintService();
+        rtfService.activate(true);        
     }
 
     /** Print and Print Preview dialog
@@ -137,6 +142,8 @@ public class PrintDialog extends JDialog
     {
     	JEditorPane pane = new JEditorPane("text/html", html); 
     	String result = printPane(pane);
+        RTFPrintService rtfService = Environment.getRTFPrintService();
+        rtfService.activate(true);        
     	return result;
 
     }
@@ -158,8 +165,16 @@ public class PrintDialog extends JDialog
         {
         	Color color = pane.getBackground();
         	pane.setBackground(Color.WHITE);
+
+            JLabel label = RootDictionaryPanel.getLabel();
+            label.setText("Print Dialog Active - Please wait");
+
+            RTFPrintService rtfService = Environment.getRTFPrintService();
+            rtfService.activate(true);        
         	pane.print(headerFormat, footerFormat);
-        	pane.setBackground(color);
+            rtfService.activate(false);        
+
+            pane.setBackground(color);
         }
         catch (PrinterException e)
         {

@@ -54,7 +54,7 @@ public class Wolf extends JFrame implements WindowListener
    public Wolf() throws Throwable
    {  
 	  super("[W]ord [O]riented [L]inguistics [F]ramework");
-	  
+
       SoundDefaults.setSandboxKey("org.acorns.wolf");
       String libraryFolder = "Wolf_lib";
       String userPath = System.getProperty("user.dir") + File.separator + libraryFolder;
@@ -71,6 +71,9 @@ public class Wolf extends JFrame implements WindowListener
       
 	  if (SoundDefaults.isSandboxed())
 	  {
+		  String libraryPath = System.getProperty("java.library.path");
+	      System.out.println(libraryPath);
+	        
 		  String libName = "SecurityScopedBookmarkLibrary";
 		  System.loadLibrary(libName);
 		  

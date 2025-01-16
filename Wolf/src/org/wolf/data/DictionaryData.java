@@ -576,16 +576,6 @@ public class DictionaryData  implements Serializable, Cloneable, Constants
           finally { out.close(); }
           return "";
         }
-        else if (file.getName().endsWith(".pdf"))
-        {
-        	byte[] output = format.toPDF(document, active, selectedLanguages);
-        	if (output == null) throw new IllegalArgumentException();
-
-        	FileOutputStream out = new FileOutputStream(file);
-        	try { out.write(output); }
-        	finally { out.close(); }
-        	return "";
-        }
         else if (file.getName().endsWith(".acorns"))
         {
         	StringWriter streamWriter = new StringWriter();

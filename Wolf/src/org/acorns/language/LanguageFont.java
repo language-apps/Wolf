@@ -53,6 +53,12 @@ public class LanguageFont implements Cloneable, Serializable
     */
    static String blanks = "                             ";
    public @Override String toString()  {  return toString(null); }
+ 
+   /** There are no special characters for the Wolf application */
+   public String toString(boolean includeSpecials)
+   {
+	   return toString(null);
+   }
    
    public String toString(String languageCode)
    {

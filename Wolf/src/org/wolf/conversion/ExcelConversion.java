@@ -191,6 +191,10 @@ public class ExcelConversion implements Constants
 				fontData = styles.get(parent);
 				if (fontData!=null)
 					styles.put(id, fontData);
+				else
+				{
+					styles.put(id, defaultFont);
+				}
 			}
 		}
 		return styles;
@@ -1171,6 +1175,7 @@ public class ExcelConversion implements Constants
 			return null;
 		
 		String[] fontData = styles.get(id);
+		if (fontData==null) return fontData;
 		return fontData.clone();
 	}
 

@@ -130,8 +130,6 @@ public class DictionaryListener implements ActionListener, PropertyChangeListene
         label.setText("Processing - please wait");
         SwingWorker<String, Void> thread = new ProcessDictionaryListener();
         thread.execute();
-        
-   //     SwingUtilities.invokeLater(new ProcessDictionaryListener());
     }
 
     class ProcessDictionaryListener extends SwingWorker<String, Void>
@@ -388,6 +386,7 @@ public class DictionaryListener implements ActionListener, PropertyChangeListene
 	                             try
 	                             {  
 	                                 String output = dictionary.exportXML(null);
+	                                 label.setText("Opening the Print Dialog");
 	                                 if (output.indexOf("<html>")>=0)
 	                                 {
 	                                 	PrintDialog print = new PrintDialog();
