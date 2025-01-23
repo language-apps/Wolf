@@ -472,9 +472,7 @@ function Toolbar(dictionaryObject)
 		
 		for (i=0; i < len; i++) //makes a button for each language found and adds it to the DOM with an event listener
 		{
-	//		if (langCounts[i]==0)
-	//			continue;
-			button = document.createElement("button");
+		button = document.createElement("button");
 			button.setAttribute("class", "lang");
 
 			face = langArr[i].getAttribute("face");
@@ -482,12 +480,17 @@ function Toolbar(dictionaryObject)
 			size = langArr[i].getAttribute("size");
 			if (!size || size.length==0) size="12";
 			name = langArr[i].getAttribute("name");
+			if (name && name.length>0)
+			{
+				variant = langArr[i].getAttribute("variant");
+				if (variant && variant.length>0) name = name + "/" + variant;
+			}
+			else name = langArr[i].getAttribute("lang");
+			
 			fontObject = {"face":face, "size":size, "name": name};
 			code = langArr[i].getAttribute("lang");
 			langFonts[code] = fontObject;
 			
-			variant = langArr[i].getAttribute("variant");
-			if (variant && variant.length>0) name = name + "/" + variant;
 			txt = document.createTextNode(name);
 			
 			sortOrder[code] = langArr[i].getAttribute("sort");
