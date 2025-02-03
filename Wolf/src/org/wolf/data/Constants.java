@@ -30,7 +30,7 @@ import java.awt.Color;
 /** Define various constants used by various dictionary modules */
 public interface Constants
 {   // The current WOLF version
-    public final static String version = "4.0.1";
+    public final static String version = "4.2.2";
 
     /** Ontology one line: leaf name */
     public final static int ONTOLOGY_VALUE = 0;
