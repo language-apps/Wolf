@@ -99,6 +99,7 @@ public class DictionaryPanel extends JPanel
     private JButton[] enablableButtons;
     private JLabel    searchLabel;
     private JTextField field;
+    private JPanel northPanel;
 
     private static final long serialVersionUID=1L;
     
@@ -108,7 +109,6 @@ public class DictionaryPanel extends JPanel
      * @param colors   color scheme for the background color
      * @param panelSize desired size fot this panel
      */
-     
     public DictionaryPanel
             (RootDictionaryPanel root, ColorScheme colors, Dimension panelSize)
     {   
@@ -153,17 +153,18 @@ public class DictionaryPanel extends JPanel
           "reload", "Reload the dictionary's initial view","rv","d" + RELOAD,
           "","","","d",
        };
-        JPanel northPanel = buttonPanel
+        northPanel = buttonPanel
                 (north,BorderLayout.NORTH,BoxLayout.X_AXIS, 'd', null);
 
-        Dimension  size  = new Dimension(400,20);
+        Dimension  size  = new Dimension(150,20);
         field = new JTextField(40);
-        field.setMaximumSize(size);
+        field.setMinimumSize(size);
+        field.setMaximumSize(new Dimension(150,20));
         field.setName("sw");
         field.addActionListener(dictionaryListener);
         northPanel.add(new JLabel("Search: "));
         northPanel.add(field);
-        northPanel.add(Box.createHorizontalStrut(5));
+        northPanel.add(Box.createHorizontalGlue());
         searchLabel = new JLabel("W", SwingConstants.CENTER);
         searchLabel.setToolTipText("Click to change search mode");
         searchLabel.setFont(new Font(null, Font.BOLD, 14));
@@ -189,7 +190,7 @@ public class DictionaryPanel extends JPanel
                    }
                 );
         northPanel.add(searchLabel);
-        northPanel.add(Box.createHorizontalStrut(STRUTSIZE));
+        northPanel.add(Box.createHorizontalGlue());
         
         
         FormatData templates = getEnv().getTemplateData();
@@ -254,6 +255,11 @@ public class DictionaryPanel extends JPanel
         root.setDictionaryDisplayPanel(dictionaryPanel);
 
     }   // End of constructor.
+    
+    public JPanel getNorthPanel()
+    {
+    	return northPanel;
+    }
 
 
     // Method to create a panel of buttons.
